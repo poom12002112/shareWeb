@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure--cd@h7v#edop$!h3cj=(k#5m#z*pel+5u&$n#1t8#t2e%=vyw_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['2632-1-34-138-177.ngrok-free.app', '127.0.0.1']
+ALLOWED_HOSTS = ['2632-1-34-138-177.ngrok-free.app', '127.0.0.1','www.rjianas.cloudns.be']
 
 
 # Application definition
@@ -86,8 +86,8 @@ DATABASES = {
         'NAME': 'shop',
         'USER': 'admin',
         'PASSWORD': '0956200936',
-        'HOST': '192.168.0.13',
-        'PORT': '3306',
+        'HOST': 'www.rjianas.cloudns.be',
+        'PORT': '6688',
         'OPTIONS': {
             'charset': 'utf8mb4',
             'use_unicode': True,
