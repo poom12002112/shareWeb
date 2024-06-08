@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<!-- Page Wrapper -->
+<section class="page-wrapper success-msg">
+  <div class="container">
+    <div class="block text-center">
+      <i class="tf-ion-android-checkmark-circle"></i>
+      <h2 class="text-center">付款成功</h2>
+      <a href="{% url 'products:home' %}" class="btn btn-main mt-20">返回商店</a>
+    </div>
+  </div>
+</section><!-- /.page-warpper -->
+{% endblock content %}

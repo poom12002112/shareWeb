@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Main Menu Section -->
+<div class="page-wrapper">
+  <div class="cart shopping">
+    <div class="container">
+      <div class="product-list">
+        <form method="post">
+          {% csrf_token %}
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="">商品</th>
+        		<th class="">方案</th>
+                <th class="">單價</th>
+                <th class="">數量</th>
+                <th class="">總計</th>
+                <th class="">操作</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for productoption_id, product in product_dict.items %}
+              <tr class="">
+                <td class="">
+                  <div class="product-info">
+                    {% if product.product.product_image_set.all %}
+                    {% if product.product.product_image_set.all.0.image %}
+                    <img width="80" src="{{ product.product.product_image_set.all.0.image.url }}" alt="" />
+                    {% endif %}
+                    {% endif %}
+                    <a href="">{{ product.product.name }}</a>
+                  </div>
+                </td>
+                <td class="">{{ product.size }}</td>
+                <td class="">${{ product.price }}</td>
+                <td class="">
+                  <div class="quantity-control">
+                    <button type="button" onclick="updateQuantityAndUpdateCart('{{ productoption_id|stringformat:'s' }}', -1)">-</button>
+            			<input type="number" name="quantity_{{ productoption_id|stringformat:'s' }}" id="quantity_{{ productoption_id|stringformat:'s' }}" value="{{ product.count }}" min="1" readonly>
+        			<button type="button" onclick="updateQuantityAndUpdateCart('{{ productoption_id|stringformat:'s' }}', 1)">+</button>
+                  </div>
+                </td>
+                <td class="">${{ product.total_price }}</td>
+                <td class="">
+                  <a href="javascript:void(0)"
+                    onclick="removeFromCartAndCheckRedirect('{% url 'orders:delete_cart' productoption_id|stringformat:'s' %}', '已移除商品', 'true');"
+                    class="product-remove">移除</a>
+                </td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="5" class="text-center">您的購物車是空的</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <ul class="summary-prices"></ul>
+          <div class="summary-total">
+                  <span>總金額</span>
+                  <span>${{ total }}</span>
+          </div>
+          {% if not product_dict %}
+          <div class="checkbtn" style="display: none;">  <!-- 將結帳按鈕隱藏 -->
+            <button type="submit" class="btn btn-main pull-right">更新購物車</button>
+            <a href="{% url 'orders:checkout' %}" class="btn btn-main pull-right" style="margin-right: 10px;">結帳</a>
+          </div>
+          {% else %}
+          <div class="checkbtn">
+            <button type="submit" class="btn btn-main pull-right">更新購物車</button>
+            <a href="{% url 'orders:checkout' %}" class="btn btn-main pull-right" style="margin-right: 10px;">結帳</a>
+          </div>
+         {% endif %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+        // 获取指定名称的 cookie 值
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        function removeFromCartAndCheckRedirect(url, successMessage, reload) {
+            console.log("移除商品的URL:", url); // 添加這行調試信息
+            console.log("成功訊息:", successMessage); // 添加這行調試信息
+            console.log("是否重新加載頁面:", reload); // 添加這行調試信息
+        
+            // 執行 AJAX 請求
+            getAjax(url, successMessage, reload);
+        
+            // 檢查商品卡片是否還存在
+            var productCards = document.querySelectorAll('.product-card');
+            if (productCards.length === 1) {
+                console.log('購物車已清空，將重定向到首頁'); // 添加這行調試信息
+                alert('您的購物車是空的');
+                window.location.href = '/'; // 重新導向到首頁
+            } else {
+                console.log('購物車中還有其他商品'); // 添加這行調試信息
+            }
+        }
+
+        // 定义 UpdateCartView 函数
+        function UpdateCartView(productoption_id, newQuantity) {
+            console.log('更新购物车视图，产品ID:', productoption_id, '新的数量:', newQuantity);
+        }
+
+        // 更新数量并更新购物车
+        function updateQuantityAndUpdateCart(productoption_id, change) {
+            var quantityInput = document.querySelector('#quantity_' + productoption_id);
+            var newQuantity = parseInt(quantityInput.value) + change;
+            if (newQuantity >= 1) {
+                quantityInput.value = newQuantity;
+                UpdateCartView(productoption_id, newQuantity);
+                document.querySelector('form').submit(); // 提交表单
+            }
+        }
+</script>
+
+{% endblock content %}

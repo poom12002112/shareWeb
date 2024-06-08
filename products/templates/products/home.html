@@ -1,0 +1,75 @@
+<!-- products/templates/products/home.html -->
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="products section bg-gray">
+    <div class="container">
+        <div class="row">
+            <div class="title text-center">
+                <h2>所有商品</h2>
+            </div>
+        </div>
+        <div class="row shopitem">
+            {% for item in items %}
+                <div class="col-md-4">
+                    <div class="product-item">
+                        <div class="product-thumb">
+                            {% if item.product_image_set.all.0.image %}
+                                <a href="{% url 'products:detail' item.id %}">
+                                    <img class="img-responsive" src="{{ item.product_image_set.all.0.image.url }}" alt="product-img" />
+                                </a>
+                            {% endif %}
+                            <div class="preview-meta">
+                                <ul>
+                                    
+                                    <li>
+                                        <a href="{% url 'products:detail' item.id %}">
+                                            <i class="tf-ion-ios-search-strong"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h4><a href="product-single.html">{{ item.name }}</a></h4>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal product-modal fade" id="product-modal-{{ item.id }}">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i class="tf-ion-close"></i>
+                    </button>
+                    <div class="modal-dialog " role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="row ">
+                                    <div class="col-md-8 col-sm-6 col-xs-12">
+                                        <div class="modal-image">
+                                            {% if item.product_image_set.all.0.image %}
+                                                <a href="{% url 'products:detail' item.id %}">
+                                                    <img class="img-responsive" src="{{ item.product_image_set.all.0.image.url }}" alt="product-img" />
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-sm-6 col-xs-12">
+                                        <div class="product-short-details">
+                                            <h2 class="product-title">{{ item.name }}</h2>
+                                            <p class="product-short-description">
+                                                {{ item.description }}
+                                            </p>
+                                            <a href="{% url 'products:detail' item.id %}" class="btn btn-transparent ms-3">檢視商品詳細資料</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.modal -->
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock content %}

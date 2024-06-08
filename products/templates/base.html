@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/products/css/bootstrap.min.css">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'products/images/串流影音共享平台.png' %}">
+    <!-- Themefisher Icon font -->
+    <link rel="stylesheet" href="{% static 'products/plugins/themefisher-font/style.css' %}"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">   
+    <!-- Animate css -->
+    <link rel="stylesheet" href="{% static 'products/plugins/animate/animate.css' %}">
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" href="{% static 'products/plugins/slick/slick.css' %}">
+    <link rel="stylesheet" href="{% static 'products/plugins/slick/slick-theme.css' %}">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="{% static 'products/css/style.css' %}">
+    <script src="/static/products/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/static/products/css/all.css">
+    <!-- Essential Scripts -->
+    <!-- Main jQuery -->
+    <script src="{% static 'products/plugins/jquery/dist/jquery.min.js' %}"></script>
+        <!-- Bootstrap Touchpin -->
+    <script src="{% static 'products/plugins/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js' %}"></script>
+    <!-- Instagram Feed Js -->
+    <script src="{% static 'products/plugins/instafeed/instafeed.min.js' %}"></script>
+    <!-- Video Lightbox Plugin -->
+    <script src="{% static 'products/plugins/ekko-lightbox/dist/ekko-lightbox.min.js' %}"></script>
+    <!-- Count Down Js -->
+    <script src="{% static 'products/plugins/syo-timer/build/jquery.syotimer.min.js' %}"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <!-- slick Carousel -->
+    <script src="{% static 'products/plugins/slick/slick.min.js' %}"></script>
+    <script src="{% static 'products/plugins/slick/slick-animation.min.js' %}"></script>
+    <!-- Main Js File -->
+    <script src="{% static 'products/js/script.js' %}"></script>
+    <!-- sweetalert2 -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>串流影音共享平台</title>
+</head>
+<body>
+  <nav class="navbar navbar1 navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid ">
+        <a class="navbar-brand logo" href="{% url 'products:home' %}">串流影音共享平台</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse titlelist" id="navbarSupportedContent">
+            <ul class="nav navbar-nav mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'products:home' %}">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'orders:index' %}">訂單查詢</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'orders:cart' %}">購物車</a>
+                </li>                
+        </div>
+    </div>
+</nav>   
+
+    {% block content %}
+    {% endblock content %}
+
+    <footer class="p-4 border-top bg-dark">
+      <div class="container align-item-center justify-content-between">
+        <p class="mb-0 text-center">
+          &copy;2024 串流影音共享平台所有 <br>聯絡方式:poom12002112@gmail.com
+        </p>
+      </div>
+    </footer>
+
+      <script>
+        function getAjax(url, msg, reload) {
+            $.get(url, function(data, status) {
+                Swal.fire({
+                    icon: 'success',
+                    title: msg,
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then((result) => {
+                    if (reload == 'true') {
+                        location.reload()
+                    }
+                })
+            });
+        }
+    </script>
+    
+</body>
+</html>

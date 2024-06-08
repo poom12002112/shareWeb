@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container bg-gray">
+    <div class="container-account">
+        <div class="search">
+            <p>訂單查詢</p>
+            <form id="searchForm" method="post">
+                {% csrf_token %}
+                <input type="text" class="form-control" name="phone" placeholder="請輸入手機號碼" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                <input type="text" class="form-control" name="email" placeholder="請輸入電子信箱" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                <button type="submit" class="btn btn-success">搜尋</button>
+            </form>
+        </div>
+    
+        <!-- 顯示搜尋結果 -->
+        <div id="searchResults" class="search-results">
+            {% if orders %}
+                <h2 class="results-title">訂單查詢結果</h2>
+                <ul class="order-list">
+                    {% for order in orders %}
+                        <li class="order-item">
+                            <strong>訂單編號:</strong> {{ order.order_id }}<br>
+                            <strong>姓名:</strong> {{ order.name }}<br>
+                            <strong>信箱:</strong> {{ order.email }}<br>
+                            <strong>商品名稱:</strong> {{ order.product_names }}<br>
+                            <strong>總計:</strong> ${{ order.total }}<br>
+                            <strong>訂單狀態:</strong> {{ order.status }}<br>
+			    <strong>訂單完成時間:</strong> {{ order.modified }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
